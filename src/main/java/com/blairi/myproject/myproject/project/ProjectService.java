@@ -18,6 +18,10 @@ public class ProjectService {
 	@Autowired
 	private UserService userService;
 	
+	public Project save(Project project) {
+		return projectRepository.save(project);
+	}
+	
 	public List<Project> findAllProjectsByOwnerId(Long id) {
 		User user = userService.findById(id);
 		return user.getProjects();
