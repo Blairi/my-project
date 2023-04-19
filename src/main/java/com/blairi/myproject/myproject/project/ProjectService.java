@@ -1,6 +1,7 @@
 package com.blairi.myproject.myproject.project;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,15 @@ public class ProjectService {
 	public List<Project> findAllProjectsByOwnerId(Long id) {
 		User user = userService.findById(id);
 		return user.getProjects();
+	}
+	
+	public Project findById(Long id) {
+		
+		Optional<Project> projectFound = projectRepository.findById(id);
+		
+		if(projectFound.isEmpty()) throw new RuntimeException("Project not found");
+		
+		return projectFound.get();
 	}
 	
 }
