@@ -3,6 +3,7 @@ package com.blairi.myproject.myproject.todo;
 import java.time.LocalDate;
 
 import com.blairi.myproject.myproject.project.Project;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +23,7 @@ public class Todo {
 	private LocalDate lastModified;
 
 	@ManyToOne
+	@JsonIgnore
 	private Project project;
 
 	public Todo() {

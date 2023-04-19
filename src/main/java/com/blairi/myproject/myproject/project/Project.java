@@ -4,10 +4,12 @@ import java.util.List;
 
 import com.blairi.myproject.myproject.todo.Todo;
 import com.blairi.myproject.myproject.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -21,6 +23,8 @@ public class Project {
 	private String project;
 
 	@ManyToOne
+	@JsonIgnore
+	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
 	@OneToMany(mappedBy = "project")
