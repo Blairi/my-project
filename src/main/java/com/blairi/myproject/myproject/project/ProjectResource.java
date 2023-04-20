@@ -1,6 +1,7 @@
 package com.blairi.myproject.myproject.project;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.blairi.myproject.myproject.todo.Todo;
+import com.blairi.myproject.myproject.todo.TodoService;
 import com.blairi.myproject.myproject.user.User;
 import com.blairi.myproject.myproject.user.UserService;
 
@@ -25,6 +27,9 @@ public class ProjectResource {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private TodoService todoService;
 	
 	@GetMapping("/projects")
 	public List<Project> retrieveAllProjects() {
@@ -58,6 +63,26 @@ public class ProjectResource {
 	@GetMapping("/projects/{id}/todos")
 	public List<Todo> retrieveAllTodosByProjectId(@PathVariable Long id) {
 		return projectService.findById(id).getTodos();
+	}
+	
+	@PostMapping("/projects/{id}/todos")
+	public ResponseEntity<Object> createTodo(
+			@PathVariable Long id, @RequestBody Todo todo) {
+		
+		Project projectFound = projectService.findById(id);
+		
+		todo.setProject(projectFound);
+		todo.setDone(false);
+		todo.setLastModified(LocalDate.now());
+		
+		Todo savedTodo = todoService.save(todo);
+		
+		URI location = ServletUriComponentsBuilder
+				.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(savedTodo.getId()).toUri();
+		
+		return ResponseEntity.created(location).build();
+		
 	}
 	
 	@GetMapping("/projects/{projectId}/todos/{id}")
