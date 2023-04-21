@@ -7,9 +7,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -98,6 +100,26 @@ public class ProjectResource {
 		if(todoFound.isEmpty()) throw new RuntimeException("Todo not found"); 
 		
 		return todoFound.get();
+	}
+	
+	@PutMapping("/projects/{projectId}/todos/{id}")
+	public ResponseEntity<Object> updateTodoById(
+			@PathVariable Long projectId, @PathVariable Long id, 
+			@RequestBody Todo todoUpdated) {
+		
+		if( !projectService.todoBelongsTo(id, projectId) )
+			throw new RuntimeException("Todo not belongs to the project");
+		
+		Todo todoFound = todoService.findById(id);
+		
+		todoFound.setDescription(todoUpdated.getDescription());
+		todoFound.setTargetDate(LocalDate.now());
+		todoFound.setDone(todoUpdated.isDone());
+		todoFound.setLastModified(LocalDate.now());
+		
+		todoService.save(todoFound);
+		
+		return ResponseEntity.ok().build();
 	}
 	
 }
