@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -122,4 +123,15 @@ public class ProjectResource {
 		return ResponseEntity.ok().build();
 	}
 	
+	@DeleteMapping("/projects/{projectId}/todos/{id}")
+	public ResponseEntity<Object> deleteTodoById(
+			@PathVariable Long projectId, @PathVariable Long id) {
+		
+		if( !projectService.todoBelongsTo(id, projectId) )
+			throw new RuntimeException("Todo not belongs to the project");
+		
+		todoService.deleteById(id);
+		
+		return ResponseEntity.ok().build();
+	}
 }
