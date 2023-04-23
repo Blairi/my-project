@@ -63,6 +63,12 @@ public class ProjectResource {
 		return projectService.findById(id);
 	}
 	
+	@DeleteMapping("/projects/{id}")
+	public ResponseEntity<Object> deleteProjectById(@PathVariable Long id) {
+		projectService.delete(id);
+		return ResponseEntity.ok().build();	
+	}
+	
 	@GetMapping("/projects/{id}/todos")
 	public List<Todo> retrieveAllTodosByProjectId(@PathVariable Long id) {
 		return projectService.findById(id).getTodos();
