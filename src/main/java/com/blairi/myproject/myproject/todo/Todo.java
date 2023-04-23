@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Todo {
@@ -18,8 +20,14 @@ public class Todo {
 	private Long id;
 	
 	private boolean done;
+	
+	@NotBlank(message = "Description is mandatory")
 	private String description;
+	
+	@NotBlank
+	@FutureOrPresent
 	private LocalDate targetDate;
+	
 	private LocalDate lastModified;
 
 	@ManyToOne
