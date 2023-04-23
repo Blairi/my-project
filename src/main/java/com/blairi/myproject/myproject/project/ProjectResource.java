@@ -22,6 +22,8 @@ import com.blairi.myproject.myproject.todo.TodoService;
 import com.blairi.myproject.myproject.user.User;
 import com.blairi.myproject.myproject.user.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 public class ProjectResource {
 	
@@ -88,7 +90,7 @@ public class ProjectResource {
 	
 	@PostMapping("/projects/{id}/todos")
 	public ResponseEntity<Object> createTodo(
-			@PathVariable Long id, @RequestBody Todo todo) {
+			@PathVariable Long id, @Valid @RequestBody Todo todo) {
 		
 		Project projectFound = projectService.findById(id);
 		
@@ -124,7 +126,7 @@ public class ProjectResource {
 	@PutMapping("/projects/{projectId}/todos/{id}")
 	public ResponseEntity<Object> updateTodoById(
 			@PathVariable Long projectId, @PathVariable Long id, 
-			@RequestBody Todo todoUpdated) {
+			@Valid @RequestBody Todo todoUpdated) {
 		
 		if( !projectService.todoBelongsTo(id, projectId) )
 			throw new RuntimeException("Todo not belongs to the project");
