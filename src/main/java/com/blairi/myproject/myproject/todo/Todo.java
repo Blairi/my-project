@@ -24,7 +24,6 @@ public class Todo {
 	@NotBlank(message = "Description is mandatory")
 	private String description;
 	
-	@NotBlank
 	@FutureOrPresent
 	private LocalDate targetDate;
 	
