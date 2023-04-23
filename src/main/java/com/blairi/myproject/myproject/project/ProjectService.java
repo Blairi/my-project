@@ -53,4 +53,9 @@ public class ProjectService {
 		
 	}
 	
+	public void delete(Long id) {
+		Project projectFound = this.findById(id);
+		projectRepository.delete(projectFound);
+	}
+	
 }
