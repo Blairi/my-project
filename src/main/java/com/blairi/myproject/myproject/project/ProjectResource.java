@@ -58,6 +58,18 @@ public class ProjectResource {
 		return ResponseEntity.created(location).build();
 	}
 	
+	@PutMapping("/projects/{id}")
+	public ResponseEntity<Object> updateProjectById(
+			@PathVariable Long id, @RequestBody Project projectUpdated) {
+		
+		Project projectFound = projectService.findById(id);
+		projectFound.setProject( projectUpdated.getProject() );
+		
+		projectService.save(projectFound);
+		
+		return ResponseEntity.ok().build();
+	}
+	
 	@GetMapping("/projects/{id}")
 	public Project retrieveProjectById(@PathVariable Long id) {
 		return projectService.findById(id);
