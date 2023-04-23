@@ -45,7 +45,7 @@ public class ProjectResource {
 	}
 	
 	@PostMapping("/projects")
-	public ResponseEntity<Object> createProject(@RequestBody Project project) {
+	public ResponseEntity<Object> createProject(@Valid @RequestBody Project project) {
 		
 		// TODO: Remove hard coded owner
 		User user = userService.findById(1L);
@@ -62,7 +62,7 @@ public class ProjectResource {
 	
 	@PutMapping("/projects/{id}")
 	public ResponseEntity<Object> updateProjectById(
-			@PathVariable Long id, @RequestBody Project projectUpdated) {
+			@PathVariable Long id, @Valid @RequestBody Project projectUpdated) {
 		
 		Project projectFound = projectService.findById(id);
 		projectFound.setProject( projectUpdated.getProject() );
