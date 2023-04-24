@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.blairi.myproject.exception.ResourceNotFoundException;
 import com.blairi.myproject.myproject.todo.Todo;
 import com.blairi.myproject.myproject.todo.TodoService;
 import com.blairi.myproject.myproject.user.User;
@@ -118,7 +119,7 @@ public class ProjectResource {
 				.filter(todo -> todo.getId().equals(id))
 				.findFirst();
 		
-		if(todoFound.isEmpty()) throw new RuntimeException("Todo not found"); 
+		if(todoFound.isEmpty()) throw new ResourceNotFoundException("todo", "id", id); 
 		
 		return todoFound.get();
 	}

@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.blairi.myproject.exception.ResourceNotFoundException;
+
 @Service
 public class TodoService {
 	
@@ -20,7 +22,7 @@ public class TodoService {
 		
 		Optional<Todo> todoFound = todoRepository.findById(id);
 		
-		if(todoFound.isEmpty()) throw new RuntimeException("Todo not found");
+		if(todoFound.isEmpty()) throw new ResourceNotFoundException("todo", "id", id);
 		
 		return todoFound.get();
 	}
