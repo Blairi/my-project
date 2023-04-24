@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.blairi.myproject.exception.ResourceNotFoundException;
 import com.blairi.myproject.myproject.todo.Todo;
 import com.blairi.myproject.myproject.todo.TodoService;
 import com.blairi.myproject.myproject.user.User;
@@ -36,7 +37,7 @@ public class ProjectService {
 		
 		Optional<Project> projectFound = projectRepository.findById(id);
 		
-		if(projectFound.isEmpty()) throw new RuntimeException("Project not found");
+		if(projectFound.isEmpty()) throw new ResourceNotFoundException("project", "id", id);
 		
 		return projectFound.get();
 	}
