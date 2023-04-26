@@ -15,6 +15,7 @@ public class TodoService {
 	private TodoRepository todoRepository;
 	
 	public Todo save(Todo todo) {
+		todo.setLastModified(LocalDate.now());
 		return todoRepository.save(todo);
 	}
 	

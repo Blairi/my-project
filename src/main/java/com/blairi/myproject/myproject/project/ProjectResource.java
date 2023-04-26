@@ -97,7 +97,6 @@ public class ProjectResource {
 		
 		todo.setProject(projectFound);
 		todo.setDone(false);
-		todo.setLastModified(LocalDate.now());
 		
 		Todo savedTodo = todoService.save(todo);
 		
@@ -137,7 +136,6 @@ public class ProjectResource {
 		todoFound.setDescription(todoUpdated.getDescription());
 		todoFound.setTargetDate(LocalDate.now());
 		todoFound.setDone(todoUpdated.isDone());
-		todoFound.setLastModified(LocalDate.now());
 		
 		todoService.save(todoFound);
 		
