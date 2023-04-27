@@ -59,4 +59,18 @@ public class ProjectService {
 		projectRepository.delete(projectFound);
 	}
 	
+	public Todo findProjectTodo(Long projectId, Long todoId) {
+		
+		List<Todo> todos = this.findById(projectId).getTodos();
+		
+		Optional<Todo> todoFound = todos.stream()
+				.filter(todo -> todo.getId().equals(todoId))
+				.findFirst();
+		
+		if(todoFound.isEmpty()) throw new ResourceNotFoundException("todo", "id", todoId);
+		
+		return todoFound.get();
+		
+	}
+	
 }

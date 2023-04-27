@@ -110,17 +110,8 @@ public class ProjectResource {
 	
 	@GetMapping("/projects/{projectId}/todos/{id}")
 	public Todo retrieveProjectTodoByTodoId(
-			@PathVariable Long projectId, @PathVariable Long id) {
-		
-		List<Todo> todos = projectService.findById(projectId).getTodos();
-		
-		Optional<Todo> todoFound = todos.stream()
-				.filter(todo -> todo.getId().equals(id))
-				.findFirst();
-		
-		if(todoFound.isEmpty()) throw new ResourceNotFoundException("todo", "id", id); 
-		
-		return todoFound.get();
+			@PathVariable Long projectId, @PathVariable Long id) { 
+		return projectService.findProjectTodo(projectId, id);
 	}
 	
 	@PutMapping("/projects/{projectId}/todos/{id}")
