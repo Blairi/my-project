@@ -21,9 +21,6 @@ public class ProjectService {
 	@Autowired
 	private UserService userService;
 	
-	@Autowired
-	private TodoService todoService;
-	
 	public Project save(Project project) {
 		return projectRepository.save(project);
 	}
@@ -42,18 +39,6 @@ public class ProjectService {
 		return projectFound.get();
 	}
 	
-	public boolean todoBelongsTo(Long todoId, Long projectId) {
-		
-		Project projectFound = this.findById(projectId);
-		
-		Optional<Todo> todoFound = projectFound
-				.getTodos().stream()
-				.filter(todo -> todo.getId().equals(todoId)).findFirst();
-		
-		return todoFound.isPresent();
-		
-	}
-	
 	public void delete(Long id) {
 		Project projectFound = this.findById(id);
 		projectRepository.delete(projectFound);
@@ -69,8 +54,7 @@ public class ProjectService {
 		
 		if(todoFound.isEmpty()) throw new ResourceNotFoundException("todo", "id", todoId);
 		
-		return todoFound.get();
-		
+		return todoFound.get();		
 	}
 	
 }
