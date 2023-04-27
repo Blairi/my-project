@@ -134,10 +134,9 @@ public class ProjectResource {
 	public ResponseEntity<Object> deleteTodoById(
 			@PathVariable Long projectId, @PathVariable Long id) {
 		
-		if( !projectService.todoBelongsTo(id, projectId) )
-			throw new RuntimeException("Todo not belongs to the project");
+		Todo todoFound = projectService.findProjectTodo(projectId, id);
 		
-		todoService.deleteById(id);
+		todoService.deleteById( todoFound.getId() );
 		
 		return ResponseEntity.ok().build();
 	}
