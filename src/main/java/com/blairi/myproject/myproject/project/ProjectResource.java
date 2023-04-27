@@ -119,10 +119,7 @@ public class ProjectResource {
 			@PathVariable Long projectId, @PathVariable Long id, 
 			@Valid @RequestBody Todo todoUpdated) {
 		
-		if( !projectService.todoBelongsTo(id, projectId) )
-			throw new RuntimeException("Todo not belongs to the project");
-		
-		Todo todoFound = todoService.findById(id);
+		Todo todoFound = projectService.findProjectTodo(projectId, id);
 		
 		todoFound.setDescription(todoUpdated.getDescription());
 		todoFound.setTargetDate(LocalDate.now());
