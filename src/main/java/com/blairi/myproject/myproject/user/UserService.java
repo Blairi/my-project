@@ -20,7 +20,7 @@ public class UserService {
 		return userFound.get();
 	}
 	
-	public User create(User user) {
+	public User save(User user) {
 		// TODO: Hash the password
 		return userRepository.save(user);
 	}
