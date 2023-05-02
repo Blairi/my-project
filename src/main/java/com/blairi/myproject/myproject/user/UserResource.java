@@ -37,12 +37,11 @@ public class UserResource {
 		return ResponseEntity.created(location).build();
 	}
 	
-	@PutMapping("/user/{id}")
-	public ResponseEntity<Object> updateUser(
-			@PathVariable Long id,
-			@RequestBody @Valid User userUpdated) {
+	@PutMapping("/user")
+	public ResponseEntity<Object> updateUser(@RequestBody @Valid User userUpdated) {
 		
-		User userFound = userService.findById(id);
+		// TODO: Remove user id hardcoded
+		User userFound = userService.findById(1L);
 		
 		userFound.setEmail( userUpdated.getEmail() );
 		userFound.setName( userUpdated.getName() );
