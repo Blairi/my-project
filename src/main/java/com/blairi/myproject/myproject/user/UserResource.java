@@ -4,6 +4,7 @@ import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,6 +49,17 @@ public class UserResource {
 		userFound.setPassword( userUpdated.getPassword() );
 		
 		userService.save(userFound);
+		
+		return ResponseEntity.ok().build();
+	}
+	
+	@DeleteMapping("/user")
+	public ResponseEntity<Object> deleteUser() {
+		
+		// TODO: Remove user id hardcoded
+		User userFound = userService.findById(1L);
+		
+		userService.delete(userFound);
 		
 		return ResponseEntity.ok().build();
 	}
