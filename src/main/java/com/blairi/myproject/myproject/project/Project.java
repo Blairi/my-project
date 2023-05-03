@@ -29,7 +29,7 @@ public class Project {
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
-	@OneToMany(mappedBy = "project")
+	@OneToMany(mappedBy = "project", orphanRemoval = true)
 	private List<Todo> todos;
 
 	public Project() {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.blairi.myproject.myproject.project.Project;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -28,7 +29,7 @@ public class User {
 	@Size(min = 6)
 	private String password;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Project> projects;
 
 	public User() {
